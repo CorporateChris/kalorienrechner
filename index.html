@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kostenloser Kalorien- & Protein-Rechner</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+      color: #111;
+    }
+
+    .container {
+      max-width: 520px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      line-height: 1.15;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+      box-sizing: border-box;
+      background: #fff;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px;
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #333;
+    }
+
+    .result {
+      display: none;
+      margin-top: 26px;
+      padding: 20px;
+      background: #f0f7f0;
+      border-radius: 14px;
+      border: 1px solid #cde5cd;
+    }
+
+    .result h2 {
+      margin-top: 0;
+      font-size: 22px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .box {
+      background: #fff;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+    }
+
+    .box strong {
+      display: block;
+      font-size: 20px;
+      margin-top: 4px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.45;
+      margin-top: 18px;
+    }
+
+    .ad {
+      margin-top: 22px;
+      padding: 16px;
+      background: #111;
+      color: #fff;
+      border-radius: 14px;
+      line-height: 1.45;
+      font-size: 14px;
+    }
+
+    .ad strong {
+      font-size: 18px;
+    }
+
+    .product-buttons {
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .esn-button {
+      display: block;
+      text-align: center;
+      background: #fff;
+      color: #111;
+      text-decoration: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    .small-text {
+      font-size: 12px;
+      opacity: 0.85;
+      margin-top: 12px;
+    }
+
+    .error {
+      display: none;
+      color: #b00020;
+      margin-top: 14px;
+      font-size: 14px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: #777;
+      margin-top: 18px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Kostenloser Kalorien- & Protein-Rechner</h1>
+
+```
+<p class="subtitle">
+  Gib kurz deine Daten ein und erhalte eine grobe Orientierung für dein Kalorienziel, Protein, Fett und Kohlenhydrate.
+</p>
+
+<label for="gender">Geschlecht</label>
+<select id="gender">
+  <option value="male">Männlich</option>
+  <option value="female">Weiblich</option>
+</select>
+
+<label for="age">Alter</label>
+<input type="number" id="age" placeholder="z. B. 30" />
+
+<label for="height">Körpergröße in cm</label>
+<input type="number" id="height" placeholder="z. B. 177" />
+
+<label for="weight">Gewicht in kg</label>
+<input type="number" id="weight" placeholder="z. B. 80" />
+
+<label for="activity">Aktivitätslevel</label>
+<select id="activity">
+  <option value="1.2">Wenig aktiv - Bürojob, kaum Bewegung</option>
+  <option value="1.375">Leicht aktiv - etwas Bewegung / Schritte</option>
+  <option value="1.55">Moderat aktiv - Training 2-4x pro Woche</option>
+  <option value="1.725">Sehr aktiv - Training 5x+ pro Woche</option>
+</select>
+
+<label for="goal">Ziel</label>
+<select id="goal">
+  <option value="lose">Abnehmen</option>
+  <option value="maintain">Gewicht halten</option>
+  <option value="gain">Muskelaufbau</option>
+</select>
+
+<button onclick="calculate()">Berechnen</button>
+
+<p class="error" id="error">
+  Bitte fülle alle Felder korrekt aus.
+</p>
+
+<div class="result" id="result">
+  <h2>Deine grobe Orientierung</h2>
+
+  <div class="result-grid">
+    <div class="box">
+      Kalorienziel
+      <strong id="calories">-</strong>
+    </div>
+
+    <div class="box">
+      Protein
+      <strong id="protein">-</strong>
+    </div>
+
+    <div class="box">
+      Fett
+      <strong id="fat">-</strong>
+    </div>
+
+    <div class="box">
+      Kohlenhydrate
+      <strong id="carbs">-</strong>
+    </div>
+  </div>
+
+  <p class="note" id="goalText"></p>
+
+  <p class="note">
+    Hinweis: Das ist keine medizinische oder ernährungswissenschaftliche Beratung, sondern nur eine grobe Orientierung auf Basis deiner Angaben.
+  </p>
+
+  <div class="ad">
+    <strong>Protein einfacher erreichen?</strong><br>
+    Wenn du Schwierigkeiten hast, auf dein Protein zu kommen, können Produkte wie IsoClear oder andere High-Protein-Produkte helfen.
+    Wenn du ESN-Produkte bestellen willst, kannst du gerne meinen Code <strong>CC</strong> nutzen.
+
+    <div class="product-buttons">
+      <a href="https://www.esn.com/discount/CC?redirect=/products/isoclear-protein-clear-drink&utm_source=instagram&utm_medium=influencer&utm_campaign=CC" target="_blank" class="esn-button">
+        IsoClear Protein ansehen
+      </a>
+
+      <a href="https://www.esn.com/discount/CC?redirect=/products/esn-crank&utm_source=instagram&utm_medium=influencer&utm_campaign=CC" target="_blank" class="esn-button">
+        ESN Crank / Booster ansehen
+      </a>
+
+      <a href="https://esn.com/instagram/CC" target="_blank" class="esn-button">
+        Alle ESN-Angebote mit Code CC
+      </a>
+    </div>
+
+    <div class="small-text">
+      Werbung / Affiliate-Code. Der Code CC unterstützt mich und mein Projekt.
+    </div>
+  </div>
+</div>
+
+<footer>
+  Kostenloser Rechner von Corporate Chris
+</footer>
+```
+
+  </div>
+
+  <script>
+    function calculate() {
+      const gender = document.getElementById("gender").value;
+      const age = Number(document.getElementById("age").value);
+      const height = Number(document.getElementById("height").value);
+      const weight = Number(document.getElementById("weight").value);
+      const activity = Number(document.getElementById("activity").value);
+      const goal = document.getElementById("goal").value;
+
+      const error = document.getElementById("error");
+      const result = document.getElementById("result");
+
+      if (!age || !height || !weight || age <= 0 || height <= 0 || weight <= 0) {
+        error.style.display = "block";
+        result.style.display = "none";
+        return;
+      }
+
+      error.style.display = "none";
+
+      let bmr;
+
+      if (gender === "male") {
+        bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+      } else {
+        bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+      }
+
+      const maintenance = bmr * activity;
+
+      let targetCalories;
+      let proteinMultiplier;
+      let goalText;
+
+      if (goal === "lose") {
+        targetCalories = maintenance - 400;
+        proteinMultiplier = 2.0;
+        goalText = "Fürs Abnehmen wurde ein moderates Kaloriendefizit eingerechnet. Wichtig: Dranbleiben, Schritte machen und genug Protein essen.";
+      } else if (goal === "gain") {
+        targetCalories = maintenance + 250;
+        proteinMultiplier = 1.8;
+        goalText = "Für Muskelaufbau wurde ein leichter Kalorienüberschuss eingerechnet. Training und genug Protein sind hier besonders wichtig.";
+      } else {
+        targetCalories = maintenance;
+        proteinMultiplier = 1.8;
+        goalText = "Für Gewicht halten wurde dein ungefährer Erhaltungsbedarf berechnet.";
+      }
+
+      const protein = weight * proteinMultiplier;
+      const fat = weight * 0.8;
+
+      const proteinCalories = protein * 4;
+      const fatCalories = fat * 9;
+      const carbCalories = targetCalories - proteinCalories - fatCalories;
+      const carbs = carbCalories / 4;
+
+      document.getElementById("calories").innerText = Math.round(targetCalories) + " kcal";
+      document.getElementById("protein").innerText = Math.round(protein) + " g";
+      document.getElementById("fat").innerText = Math.round(fat) + " g";
+      document.getElementById("carbs").innerText = Math.max(0, Math.round(carbs)) + " g";
+      document.getElementById("goalText").innerText = goalText;
+
+      result.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
