@@ -241,6 +241,7 @@
 
   <p class="note">
     Hinweis: Das ist keine medizinische oder ernährungswissenschaftliche Beratung, sondern nur eine grobe Orientierung auf Basis deiner Angaben.
+    Wenn du gesundheitliche Probleme hast, stark über- oder untergewichtig bist oder sehr wenig essen möchtest, sprich bitte vorher mit medizinischem Fachpersonal.
   </p>
 
   <div class="ad">
@@ -310,9 +311,18 @@
       let goalText;
 
       if (goal === "lose") {
-        targetCalories = maintenance - 400;
+        const moderateDeficit = maintenance * 0.15;
+        const cappedDeficit = Math.min(moderateDeficit, 500);
+        const minimumCalories = gender === "male" ? 1800 : 1500;
+
+        targetCalories = maintenance - cappedDeficit;
+
+        if (targetCalories < minimumCalories) {
+          targetCalories = minimumCalories;
+        }
+
         proteinMultiplier = 2.0;
-        goalText = "Fürs Abnehmen wurde ein moderates Kaloriendefizit eingerechnet. Wichtig: Dranbleiben, Schritte machen und genug Protein essen.";
+        goalText = "Fürs Abnehmen wurde ein moderates Defizit von ca. 15 % eingerechnet, maximal jedoch 500 kcal. Zusätzlich gibt es eine Sicherheitsuntergrenze, damit das Ziel nicht unnötig niedrig wird. Wichtig: langsam, konstant und mit genug Protein abnehmen.";
       } else if (goal === "gain") {
         targetCalories = maintenance + 250;
         proteinMultiplier = 1.8;
