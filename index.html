@@ -16,7 +16,7 @@
     }
 
     .container {
-      max-width: 520px;
+      max-width: 540px;
       margin: 0 auto;
       background: #ffffff;
       padding: 24px;
@@ -33,8 +33,19 @@
     .subtitle {
       font-size: 15px;
       color: #555;
-      margin-bottom: 24px;
-      line-height: 1.4;
+      margin-bottom: 20px;
+      line-height: 1.45;
+    }
+
+    .disclaimer-top {
+      background: #fff7e6;
+      border: 1px solid #f0d99b;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 13px;
+      line-height: 1.45;
+      color: #4a3900;
+      margin-bottom: 22px;
     }
 
     label {
@@ -105,9 +116,24 @@
       margin-top: 4px;
     }
 
+    .box.full {
+      grid-column: 1 / -1;
+    }
+
     .note {
       font-size: 13px;
       color: #555;
+      line-height: 1.45;
+      margin-top: 18px;
+    }
+
+    .important-note {
+      font-size: 13px;
+      color: #333;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 14px;
       line-height: 1.45;
       margin-top: 18px;
     }
@@ -173,8 +199,12 @@
 
 ```
 <p class="subtitle">
-  Gib kurz deine Daten ein und erhalte eine grobe Orientierung für dein Kalorienziel, Protein, Fett und Kohlenhydrate.
+  Gib kurz deine Daten ein und erhalte eine grobe Orientierung für deine Erhaltungskalorien, dein Kalorienziel, Protein, Fett und Kohlenhydrate.
 </p>
+
+<div class="disclaimer-top">
+  Hinweis: Ich bin kein Ernährungsberater, Arzt oder Sportexperte. Dieser Rechner liefert nur grobe Richtwerte zur Orientierung. Wenn du gesundheitliche Themen hast, stark über- oder untergewichtig bist oder auf Nummer sicher gehen willst, sprich bitte mit einem Arzt, Ernährungsberater oder qualifizierten Experten.
+</div>
 
 <label for="gender">Geschlecht</label>
 <select id="gender">
@@ -193,10 +223,10 @@
 
 <label for="activity">Aktivitätslevel</label>
 <select id="activity">
-  <option value="1.2">Wenig aktiv - Bürojob, kaum Bewegung</option>
-  <option value="1.375">Leicht aktiv - etwas Bewegung / Schritte</option>
-  <option value="1.55">Moderat aktiv - Training 2-4x pro Woche</option>
-  <option value="1.725">Sehr aktiv - Training 5x+ pro Woche</option>
+  <option value="1.35">Wenig aktiv - Bürojob, wenig Bewegung</option>
+  <option value="1.5">Leicht aktiv - Alltag mit Bewegung / Schritte</option>
+  <option value="1.65">Moderat aktiv - Training 2-4x pro Woche</option>
+  <option value="1.8">Sehr aktiv - Training 5x+ pro Woche</option>
 </select>
 
 <label for="goal">Ziel</label>
@@ -216,8 +246,13 @@
   <h2>Deine grobe Orientierung</h2>
 
   <div class="result-grid">
-    <div class="box">
-      Kalorienziel
+    <div class="box full">
+      Geschätzte Erhaltungskalorien
+      <strong id="maintenance">-</strong>
+    </div>
+
+    <div class="box full">
+      Empfohlener Startwert
       <strong id="calories">-</strong>
     </div>
 
@@ -235,13 +270,21 @@
       Kohlenhydrate
       <strong id="carbs">-</strong>
     </div>
+
+    <div class="box">
+      Defizit / Überschuss
+      <strong id="adjustment">-</strong>
+    </div>
   </div>
 
   <p class="note" id="goalText"></p>
 
+  <div class="important-note">
+    Wichtig: Das ist kein perfekter Wert, sondern ein Startpunkt. Beobachte dein Gewicht und dein Wohlbefinden für 2–3 Wochen. Wenn du abnimmst und sich dein Gewicht verändert hat, nutze den Rechner erneut mit deinem neuen Gewicht. Wenn sich gar nichts bewegt, kannst du danach langsam nachjustieren.
+  </div>
+
   <p class="note">
-    Hinweis: Das ist keine medizinische oder ernährungswissenschaftliche Beratung, sondern nur eine grobe Orientierung auf Basis deiner Angaben.
-    Wenn du gesundheitliche Probleme hast, stark über- oder untergewichtig bist oder sehr wenig essen möchtest, sprich bitte vorher mit medizinischem Fachpersonal.
+    Dieser Rechner ersetzt keine medizinische, sportwissenschaftliche oder ernährungswissenschaftliche Beratung. Bei gesundheitlichen Problemen, Medikamenten, Essstörungen, Schwangerschaft oder Unsicherheit bitte vorher mit medizinischem Fachpersonal oder einem qualifizierten Experten sprechen.
   </p>
 
   <div class="ad">
@@ -309,28 +352,38 @@
       let targetCalories;
       let proteinMultiplier;
       let goalText;
+      let adjustmentText;
 
       if (goal === "lose") {
-        const moderateDeficit = maintenance * 0.15;
-        const cappedDeficit = Math.min(moderateDeficit, 500);
-        const minimumCalories = gender === "male" ? 1800 : 1500;
+        let deficit;
 
-        targetCalories = maintenance - cappedDeficit;
-
-        if (targetCalories < minimumCalories) {
-          targetCalories = minimumCalories;
+        if (weight < 80) {
+          deficit = 200;
+        } else if (weight <= 100) {
+          deficit = 300;
+        } else {
+          deficit = 400;
         }
 
+        targetCalories = maintenance - deficit;
         proteinMultiplier = 2.0;
-        goalText = "Fürs Abnehmen wurde ein moderates Defizit von ca. 15 % eingerechnet, maximal jedoch 500 kcal. Zusätzlich gibt es eine Sicherheitsuntergrenze, damit das Ziel nicht unnötig niedrig wird. Wichtig: langsam, konstant und mit genug Protein abnehmen.";
+        adjustmentText = "-" + deficit + " kcal";
+
+        goalText = "Fürs Abnehmen wurde zuerst dein geschätzter Erhaltungsbedarf berechnet. Davon wurde ein moderates Defizit abgezogen. Das Ziel ist kein Crash-Diät-Wert, sondern ein Startpunkt. Nach 2–3 Wochen solltest du prüfen, ob sich dein Gewicht verändert und den Rechner bei verändertem Gewicht erneut nutzen.";
       } else if (goal === "gain") {
-        targetCalories = maintenance + 250;
+        const surplus = 250;
+
+        targetCalories = maintenance + surplus;
         proteinMultiplier = 1.8;
-        goalText = "Für Muskelaufbau wurde ein leichter Kalorienüberschuss eingerechnet. Training und genug Protein sind hier besonders wichtig.";
+        adjustmentText = "+" + surplus + " kcal";
+
+        goalText = "Für Muskelaufbau wurde ein leichter Kalorienüberschuss eingerechnet. Auch hier gilt: Starte mit diesem Wert, beobachte Gewicht, Training und Wohlbefinden und passe nach 2–3 Wochen langsam an.";
       } else {
         targetCalories = maintenance;
         proteinMultiplier = 1.8;
-        goalText = "Für Gewicht halten wurde dein ungefährer Erhaltungsbedarf berechnet.";
+        adjustmentText = "0 kcal";
+
+        goalText = "Für Gewicht halten wurde dein ungefährer Erhaltungsbedarf berechnet. Nutze diesen Wert als Startpunkt und prüfe nach 2–3 Wochen, ob dein Gewicht ungefähr stabil bleibt.";
       }
 
       const protein = weight * proteinMultiplier;
@@ -341,10 +394,12 @@
       const carbCalories = targetCalories - proteinCalories - fatCalories;
       const carbs = carbCalories / 4;
 
+      document.getElementById("maintenance").innerText = Math.round(maintenance) + " kcal";
       document.getElementById("calories").innerText = Math.round(targetCalories) + " kcal";
       document.getElementById("protein").innerText = Math.round(protein) + " g";
       document.getElementById("fat").innerText = Math.round(fat) + " g";
       document.getElementById("carbs").innerText = Math.max(0, Math.round(carbs)) + " g";
+      document.getElementById("adjustment").innerText = adjustmentText;
       document.getElementById("goalText").innerText = goalText;
 
       result.style.display = "block";
