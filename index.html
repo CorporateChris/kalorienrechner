@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kostenloser Kalorien- & Protein-Rechner</title>
+
   <style>
     :root {
       --bg: #f4f4f5;
@@ -11,17 +12,18 @@
       --text: #111111;
       --muted: #5f6368;
       --border: #dedede;
-      --dark: #111111;
-      --green: #16c60c;
+      --green: #18c018;
       --green-soft: #eef9ee;
-      --purple: #7c4dff;
-      --purple-soft: #f2edff;
+      --black: #111111;
+      --black-soft: #1f1f1f;
       --warning: #fff7e6;
       --warning-border: #f0d99b;
       --danger: #b00020;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       font-family: Arial, sans-serif;
@@ -32,36 +34,38 @@
     }
 
     .container {
-      max-width: 720px;
+      max-width: 760px;
       margin: 0 auto;
       background: var(--card);
-      padding: 24px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      padding: 26px;
+      border-radius: 24px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.08);
     }
 
     h1 {
-      font-size: 30px;
-      margin: 0 0 10px;
-      line-height: 1.15;
+      font-size: 34px;
+      margin: 0 0 12px;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
     }
 
     h2 {
-      font-size: 21px;
-      margin: 0 0 14px;
+      font-size: 22px;
+      margin: 0 0 16px;
+      letter-spacing: -0.02em;
     }
 
     .subtitle {
-      font-size: 15px;
+      font-size: 16px;
       color: var(--muted);
-      margin-bottom: 20px;
+      margin: 0 0 22px;
       line-height: 1.45;
     }
 
     .disclaimer-top {
       background: var(--warning);
       border: 1px solid var(--warning-border);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 14px;
       font-size: 13px;
       line-height: 1.45;
@@ -70,38 +74,30 @@
     }
 
     .section {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px;
+      border: 1px solid #d7ead7;
+      border-radius: 18px;
+      padding: 20px;
       margin-top: 18px;
-      background: #fff;
-    }
-
-    .section.purple {
-      border-color: #d8cbff;
-      background: var(--purple-soft);
-    }
-
-    .section.green {
-      border-color: #cdeccd;
       background: var(--green-soft);
     }
 
     label {
       display: block;
       margin-top: 14px;
-      margin-bottom: 6px;
+      margin-bottom: 7px;
       font-weight: bold;
       font-size: 14px;
     }
 
     input, select {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #cfcfcf;
-      border-radius: 11px;
+      padding: 13px;
+      border: 2px solid var(--green);
+      border-radius: 12px;
       font-size: 16px;
-      background: #fff;
+      background: #fbfffb;
+      font-weight: bold;
+      color: var(--text);
     }
 
     .input-grid {
@@ -110,141 +106,74 @@
       gap: 14px;
     }
 
-    .green-input {
-      border: 2px solid var(--green);
-      background: #f7fff7;
-      font-weight: bold;
-    }
-
     .hint {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--muted);
-      line-height: 1.35;
-      margin-top: 6px;
+      line-height: 1.45;
+      margin: 8px 0 0;
     }
 
-    .pal-live {
-      margin-top: 16px;
-      padding: 14px;
-      background: #fff;
-      border: 1px solid #d7c9ff;
-      border-radius: 14px;
+    .mini-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 12px;
+      margin-top: 14px;
     }
 
-    .pal-live div {
+    .mini-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
       font-size: 13px;
       color: var(--muted);
     }
 
-    .pal-live strong {
+    .mini-card strong {
       display: block;
-      margin-top: 3px;
-      font-size: 20px;
+      font-size: 22px;
       color: var(--text);
+      margin-top: 4px;
+    }
+
+    .pal-box {
+      margin-top: 18px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .pal-box div {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .pal-box strong {
+      display: block;
+      font-size: 24px;
+      color: var(--text);
+      margin-top: 5px;
     }
 
     button {
       width: 100%;
       margin-top: 24px;
-      padding: 15px;
-      background: var(--dark);
+      padding: 16px;
+      background: var(--black);
       color: #fff;
       border: none;
-      border-radius: 14px;
-      font-size: 17px;
+      border-radius: 16px;
+      font-size: 18px;
       font-weight: bold;
       cursor: pointer;
     }
 
-    button:hover { background: #333; }
-
-    .result {
-      display: none;
-      margin-top: 26px;
-      padding: 20px;
-      background: var(--green-soft);
-      border-radius: 16px;
-      border: 1px solid #cde5cd;
-    }
-
-    .result-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .box {
-      background: #fff;
-      padding: 14px;
-      border-radius: 13px;
-      border: 1px solid var(--border);
-      font-size: 13px;
-      color: var(--muted);
-      min-height: 76px;
-    }
-
-    .box strong {
-      display: block;
-      font-size: 21px;
-      margin-top: 5px;
-      color: var(--text);
-    }
-
-    .box.full { grid-column: 1 / -1; }
-
-    .note, .important-note {
-      font-size: 13px;
-      line-height: 1.45;
-      margin-top: 18px;
-    }
-
-    .note { color: var(--muted); }
-
-    .important-note {
-      color: #333;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      padding: 14px;
-    }
-
-    .ad {
-      margin-top: 22px;
-      padding: 16px;
-      background: var(--dark);
-      color: #fff;
-      border-radius: 15px;
-      line-height: 1.45;
-      font-size: 14px;
-    }
-
-    .ad strong { font-size: 18px; }
-
-    .product-buttons {
-      margin-top: 14px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .esn-button {
-      display: block;
-      text-align: center;
-      background: #fff;
-      color: #111;
-      text-decoration: none;
-      padding: 12px;
-      border-radius: 11px;
-      font-weight: bold;
-    }
-
-    .small-text {
-      font-size: 12px;
-      opacity: 0.85;
-      margin-top: 12px;
+    button:hover {
+      background: #333;
     }
 
     .error {
@@ -255,6 +184,145 @@
       font-weight: bold;
     }
 
+    .result {
+      display: none;
+      margin-top: 26px;
+      padding: 22px;
+      background: var(--black);
+      border-radius: 22px;
+      color: #fff;
+    }
+
+    .result h2 {
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .result-subtitle {
+      margin: 0 0 18px;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.45;
+      font-size: 14px;
+    }
+
+    .hero-card {
+      background: #fff;
+      color: var(--text);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+
+    .hero-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .hero-card strong {
+      display: block;
+      font-size: 42px;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .result-card {
+      background: #fff;
+      color: var(--text);
+      border-radius: 16px;
+      padding: 16px;
+      min-height: 92px;
+    }
+
+    .result-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .result-card strong {
+      display: block;
+      font-size: 28px;
+      letter-spacing: -0.03em;
+    }
+
+    .insight {
+      margin-top: 14px;
+      background: var(--black-soft);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 15px;
+      color: rgba(255,255,255,0.88);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .ad {
+      margin-top: 22px;
+      padding: 18px;
+      background: var(--black);
+      color: #fff;
+      border-radius: 20px;
+      line-height: 1.45;
+      font-size: 14px;
+    }
+
+    .ad strong {
+      font-size: 18px;
+    }
+
+    .product-buttons {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .esn-button {
+      display: block;
+      text-align: center;
+      background: #fff;
+      color: #111;
+      text-decoration: none;
+      padding: 13px;
+      border-radius: 13px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .esn-button.full {
+      grid-column: 1 / -1;
+      background: #f2f2f2;
+    }
+
+    .small-text {
+      font-size: 12px;
+      opacity: 0.85;
+      margin-top: 12px;
+    }
+
+    .important-note {
+      font-size: 13px;
+      color: #333;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      line-height: 1.45;
+      margin-top: 18px;
+    }
+
     footer {
       text-align: center;
       font-size: 12px;
@@ -263,10 +331,34 @@
     }
 
     @media (max-width: 640px) {
-      body { padding: 12px; }
-      .container { padding: 18px; }
-      h1 { font-size: 26px; }
-      .input-grid, .result-grid, .pal-live { grid-template-columns: 1fr; }
+      body {
+        padding: 12px;
+      }
+
+      .container {
+        padding: 18px;
+        border-radius: 18px;
+      }
+
+      h1 {
+        font-size: 29px;
+      }
+
+      .input-grid,
+      .mini-grid,
+      .pal-box,
+      .result-grid,
+      .product-buttons {
+        grid-template-columns: 1fr;
+      }
+
+      .esn-button.full {
+        grid-column: auto;
+      }
+
+      .hero-card strong {
+        font-size: 36px;
+      }
     }
   </style>
 </head>
@@ -276,231 +368,312 @@
     <h1>Kostenloser Kalorien- & Protein-Rechner</h1>
 
     <p class="subtitle">
-      Gib deine Daten ein und berechne Erhaltungskalorien, Kalorienziel, Protein, Fett und Kohlenhydrate. Diese Version nutzt eine genauere PAL-Berechnung über deinen Tagesablauf.
+      Gib deine Daten ein und berechne Erhaltungskalorien, Kalorienziel, Protein, Fett und Kohlenhydrate.
+      Diese Version nutzt eine genauere PAL-Berechnung über deinen Tagesablauf.
     </p>
 
     <div class="disclaimer-top">
-      Hinweis: Ich bin kein Ernährungsberater, Arzt oder Sportexperte. Dieser Rechner liefert nur grobe Richtwerte zur Orientierung. Wenn du gesundheitliche Themen hast, stark über- oder untergewichtig bist oder auf Nummer sicher gehen willst, sprich bitte mit einem Arzt, Ernährungsberater oder qualifizierten Experten.
+      <strong>Hinweis:</strong> Ich bin kein Ernährungsberater, Arzt oder Sportexperte.
+      Dieser Rechner liefert nur grobe Richtwerte zur Orientierung. Wenn du gesundheitliche Themen hast,
+      stark über- oder untergewichtig bist oder auf Nummer sicher gehen willst, sprich bitte mit einem Arzt,
+      Ernährungsberater oder qualifizierten Experten.
     </div>
 
-    <div class="section green">
+    <div class="section">
       <h2>1. Personenangaben</h2>
+
       <div class="input-grid">
         <div>
           <label for="gender">Geschlecht</label>
-          <select id="gender" class="green-input">
+          <select id="gender">
             <option value="male">Männlich</option>
             <option value="female">Weiblich</option>
           </select>
         </div>
+
         <div>
           <label for="age">Alter</label>
-          <input type="number" id="age" class="green-input" placeholder="z. B. 30" min="1" />
+          <input type="number" id="age" placeholder="z. B. 30" />
         </div>
+
         <div>
           <label for="height">Körpergröße in cm</label>
-          <input type="number" id="height" class="green-input" placeholder="z. B. 177" min="1" />
+          <input type="number" id="height" placeholder="z. B. 177" />
         </div>
+
         <div>
           <label for="weight">Gewicht in kg</label>
-          <input type="number" id="weight" class="green-input" placeholder="z. B. 80" min="1" step="0.1" />
+          <input type="number" id="weight" placeholder="z. B. 80" />
         </div>
       </div>
-      <p class="hint">Die grünen Felder sind die Felder, die du ausfüllen oder ändern kannst.</p>
+
+      <p class="hint">
+        Die grünen Felder sind die Felder, die du ausfüllen oder ändern kannst.
+      </p>
     </div>
 
-    <div class="section green">
+    <div class="section">
       <h2>2. Makros</h2>
-      <div class="input-grid">
-        <div>
-          <label for="proteinMultiplier">Protein pro kg Körpergewicht</label>
-          <select id="proteinMultiplier" class="green-input">
-            <option value="1.6">1,6 g/kg - moderat</option>
-            <option value="1.8" selected>1,8 g/kg - guter Standard</option>
-            <option value="2.0">2,0 g/kg - Diät / sportlich</option>
-            <option value="2.2">2,2 g/kg - sehr proteinreich</option>
-          </select>
+
+      <p class="hint">
+        Damit es einfach bleibt, nutzt der Rechner automatisch sinnvolle Standardwerte.
+        Du musst hier nichts auswählen.
+      </p>
+
+      <div class="mini-grid">
+        <div class="mini-card">
+          Protein
+          <strong>1,8 g/kg</strong>
         </div>
-        <div>
-          <label for="fatMultiplier">Fett pro kg Körpergewicht</label>
-          <select id="fatMultiplier" class="green-input">
-            <option value="0.7">0,7 g/kg - eher niedrig</option>
-            <option value="0.8" selected>0,8 g/kg - guter Standard</option>
-            <option value="0.9">0,9 g/kg - etwas höher</option>
-            <option value="1.0">1,0 g/kg - hoch</option>
-          </select>
+
+        <div class="mini-card">
+          Fett
+          <strong>0,8 g/kg</strong>
         </div>
       </div>
+
+      <p class="hint">
+        Die restlichen Kalorien werden automatisch als Kohlenhydrate berechnet.
+      </p>
+
+      <input type="hidden" id="proteinMultiplier" value="1.8" />
+      <input type="hidden" id="fatMultiplier" value="0.8" />
     </div>
 
-    <div class="section purple">
-      <h2>3. Genauere PAL-Berechnung</h2>
-      <p class="hint">Trage grob ein, wie viele Stunden dein Tag aus Schlafen, Sitzen, Stehen/Gehen und Sport/schwerer Arbeit besteht. Zusammen sollten es maximal 24 Stunden sein.</p>
+    <div class="section">
+      <h2>3. PAL-Berechnung</h2>
+
+      <p class="hint">
+        Trage grob ein, wie viele Stunden dein Tag aus Schlafen, Sitzen, Stehen/Gehen und Sport/schwerer Arbeit besteht.
+        Zusammen sollten es maximal 24 Stunden sein.
+      </p>
 
       <div class="input-grid">
         <div>
           <label for="sleepHours">Schlafen</label>
-          <input type="number" id="sleepHours" class="green-input pal-field" value="7" min="0" max="24" step="0.5" />
+          <input type="number" id="sleepHours" value="7" min="0" max="24" step="0.5" oninput="updatePAL()" />
           <p class="hint">Faktor 0,95</p>
         </div>
+
         <div>
           <label for="sittingHours">Sitzend / kaum aktiv</label>
-          <input type="number" id="sittingHours" class="green-input pal-field" value="10" min="0" max="24" step="0.5" />
+          <input type="number" id="sittingHours" value="10" min="0" max="24" step="0.5" oninput="updatePAL()" />
           <p class="hint">z. B. Büro, Schreibtisch · Faktor 1,5</p>
         </div>
+
         <div>
-          <label for="walkingHours">Stehend / gehend</label>
-          <input type="number" id="walkingHours" class="green-input pal-field" value="6" min="0" max="24" step="0.5" />
-          <p class="hint">z. B. Handwerk, Spazieren, viele Schritte · Faktor 1,9</p>
+          <label for="standingHours">Stehend / gehend</label>
+          <input type="number" id="standingHours" value="6" min="0" max="24" step="0.5" oninput="updatePAL()" />
+          <p class="hint">z. B. Spazieren, viele Schritte · Faktor 1,9</p>
         </div>
+
         <div>
           <label for="sportHours">Sport / schwere Arbeit</label>
-          <input type="number" id="sportHours" class="green-input pal-field" value="1" min="0" max="24" step="0.5" />
+          <input type="number" id="sportHours" value="1" min="0" max="24" step="0.5" oninput="updatePAL()" />
           <p class="hint">z. B. Gym, Bauarbeit, intensive Aktivität · Faktor 2,4</p>
         </div>
       </div>
 
-      <div class="pal-live">
-        <div>Restzeit wird als leichte Aktivität gerechnet<strong id="restHours">0 h</strong></div>
-        <div>Berechneter PAL-Wert<strong id="palValue">-</strong></div>
+      <div class="pal-box">
+        <div>
+          Restzeit wird als leichte Aktivität gerechnet
+          <strong id="restHours">0 h</strong>
+        </div>
+
+        <div>
+          Berechneter PAL-Wert
+          <strong id="palValue">1,48</strong>
+        </div>
       </div>
     </div>
 
-    <div class="section green">
+    <div class="section">
       <h2>4. Ziel</h2>
-      <label for="goal">Was ist dein Ziel?</label>
-      <select id="goal" class="green-input">
-        <option value="lose">Fett verlieren</option>
-        <option value="maintain">Gewicht halten</option>
-        <option value="gain">Muskelaufbau</option>
-      </select>
+
+      <div class="input-grid">
+        <div>
+          <label for="goal">Was ist dein Ziel?</label>
+          <select id="goal" onchange="toggleGoalWeight()">
+            <option value="lose">Fett verlieren</option>
+            <option value="maintain">Gewicht halten</option>
+            <option value="gain">Muskelaufbau</option>
+          </select>
+        </div>
+
+        <div id="goalWeightWrap">
+          <label for="goalWeight">Optionales Zielgewicht in kg</label>
+          <input type="number" id="goalWeight" placeholder="z. B. 75" />
+        </div>
+      </div>
     </div>
 
     <button onclick="calculate()">Berechnen</button>
 
-    <p class="error" id="error">Bitte fülle alle Felder korrekt aus. Die PAL-Stunden dürfen zusammen nicht über 24 Stunden liegen.</p>
+    <p class="error" id="error">
+      Bitte fülle alle Pflichtfelder korrekt aus. Die PAL-Stunden dürfen zusammen nicht über 24 liegen.
+    </p>
 
     <div class="result" id="result">
-      <h2>Deine grobe Orientierung</h2>
+      <h2>Dein Ergebnis</h2>
 
-      <div class="result-grid">
-        <div class="box">
-          Grundumsatz
-          <strong id="bmr">-</strong>
-        </div>
-        <div class="box">
-          PAL-Wert
-          <strong id="palResult">-</strong>
-        </div>
-        <div class="box full">
-          Geschätzte Erhaltungskalorien
-          <strong id="maintenance">-</strong>
-        </div>
-        <div class="box full">
-          Empfohlener Startwert
-          <strong id="calories">-</strong>
-        </div>
-        <div class="box">
-          Protein
-          <strong id="protein">-</strong>
-        </div>
-        <div class="box">
-          Fett
-          <strong id="fat">-</strong>
-        </div>
-        <div class="box">
-          Kohlenhydrate
-          <strong id="carbs">-</strong>
-        </div>
-        <div class="box">
-          Defizit / Überschuss
-          <strong id="adjustment">-</strong>
-        </div>
-        <div class="box full">
-          Grobe Entwicklung
-          <strong id="weeklyChange">-</strong>
-        </div>
-      </div>
-
-      <p class="note" id="goalText"></p>
-
-      <div class="important-note">
-        Wichtig: Das ist kein perfekter Wert, sondern ein Startpunkt. Beobachte dein Gewicht und dein Wohlbefinden für 2–3 Wochen. Wenn du abnimmst oder zunimmst und sich dein Gewicht verändert hat, nutze den Rechner erneut mit deinem neuen Gewicht. Wenn sich gar nichts bewegt, kannst du danach langsam nachjustieren.
-      </div>
-
-      <p class="note">
-        Dieser Rechner ersetzt keine medizinische, sportwissenschaftliche oder ernährungswissenschaftliche Beratung. Bei gesundheitlichen Problemen, Medikamenten, Essstörungen, Schwangerschaft oder Unsicherheit bitte vorher mit medizinischem Fachpersonal oder einem qualifizierten Experten sprechen.
+      <p class="result-subtitle" id="resultSubtitle">
+        Das ist ein grober Startwert. Beobachte dein Gewicht und dein Wohlbefinden für 2–3 Wochen.
       </p>
 
-      <div class="ad">
-        <strong>Protein einfacher erreichen?</strong><br>
-        Wenn du Schwierigkeiten hast, auf dein Protein zu kommen, können Produkte wie IsoClear oder andere High-Protein-Produkte helfen. Wenn du ESN-Produkte bestellen willst, kannst du gerne meinen Code <strong>CC</strong> nutzen.
+      <div class="hero-card">
+        <span>🎯 Dein Kalorienziel</span>
+        <strong id="calories">-</strong>
+      </div>
 
-        <div class="product-buttons">
-          <a href="https://www.esn.com/discount/CC?redirect=/products/isoclear-protein-clear-drink&utm_source=instagram&utm_medium=influencer&utm_campaign=CC" target="_blank" class="esn-button">IsoClear Protein ansehen</a>
-          <a href="https://www.esn.com/discount/CC?redirect=/products/esn-crank&utm_source=instagram&utm_medium=influencer&utm_campaign=CC" target="_blank" class="esn-button">ESN Crank / Booster ansehen</a>
-          <a href="https://esn.com/instagram/CC" target="_blank" class="esn-button">Alle ESN-Angebote mit Code CC</a>
+      <div class="result-grid">
+        <div class="result-card">
+          <span>🔥 Erhaltung</span>
+          <strong id="maintenance">-</strong>
         </div>
 
-        <div class="small-text">Werbung / Affiliate-Code. Der Code CC unterstützt mich und mein Projekt.</div>
+        <div class="result-card">
+          <span>⚙️ Grundumsatz</span>
+          <strong id="bmrResult">-</strong>
+        </div>
+
+        <div class="result-card">
+          <span>📊 PAL</span>
+          <strong id="palResult">-</strong>
+        </div>
+
+        <div class="result-card">
+          <span>↕️ Anpassung</span>
+          <strong id="adjustment">-</strong>
+        </div>
+
+        <div class="result-card">
+          <span>💪 Protein</span>
+          <strong id="protein">-</strong>
+        </div>
+
+        <div class="result-card">
+          <span>🥑 Fett</span>
+          <strong id="fat">-</strong>
+        </div>
+
+        <div class="result-card">
+          <span>🍚 Kohlenhydrate</span>
+          <strong id="carbs">-</strong>
+        </div>
+
+        <div class="result-card">
+          <span>💧 Wasser</span>
+          <strong id="water">-</strong>
+        </div>
+      </div>
+
+      <div class="insight" id="goalText"></div>
+      <div class="insight" id="timelineText"></div>
+      <div class="insight" id="stepsText"></div>
+    </div>
+
+    <div class="important-note">
+      Wichtig: Das ist kein perfekter Wert, sondern ein Startpunkt.
+      Beobachte dein Gewicht, dein Training und dein Wohlbefinden für 2–3 Wochen.
+      Wenn sich dein Gewicht verändert hat, nutze den Rechner erneut mit deinem neuen Gewicht.
+      Wenn sich gar nichts bewegt, kannst du danach langsam nachjustieren.
+    </div>
+
+    <div class="ad">
+      <strong>Protein einfacher erreichen?</strong><br>
+      Wenn du Schwierigkeiten hast, auf dein Protein zu kommen, können Produkte wie IsoClear,
+      Designer Whey oder andere High-Protein-Produkte helfen.
+      Wenn du ESN-Produkte bestellen willst, kannst du gerne meinen Code <strong>CC</strong> nutzen.
+
+      <div class="product-buttons">
+        <a href="https://www.esn.com/discount/CC?redirect=/products/isoclear-protein-clear-drink&utm_source=instagram&utm_medium=influencer&utm_campaign=CC" target="_blank" class="esn-button">
+          🧃 IsoClear ansehen
+        </a>
+
+        <a href="https://www.esn.com/discount/CC?redirect=/products/designer-whey-protein&utm_source=instagram&utm_medium=influencer&utm_campaign=CC" target="_blank" class="esn-button">
+          🥤 Designer Whey ansehen
+        </a>
+
+        <a href="https://www.esn.com/discount/CC?redirect=/products/esn-ultrapure-creatine-monohydrate&utm_source=instagram&utm_medium=influencer&utm_campaign=CC" target="_blank" class="esn-button">
+          💪 Kreatin ansehen
+        </a>
+
+        <a href="https://www.esn.com/discount/CC?redirect=/products/esn-crank&utm_source=instagram&utm_medium=influencer&utm_campaign=CC" target="_blank" class="esn-button">
+          ⚡ Crank / Booster ansehen
+        </a>
+
+        <a href="https://esn.com/instagram/CC" target="_blank" class="esn-button full">
+          🎁 Alle ESN-Angebote mit Code CC
+        </a>
+      </div>
+
+      <div class="small-text">
+        Werbung / Affiliate-Code. Der Code CC unterstützt mich und mein Projekt.
       </div>
     </div>
 
-    <footer>Kostenloser Rechner von Corporate Chris</footer>
+    <footer>
+      Kostenloser Rechner von Corporate Chris
+    </footer>
   </div>
 
   <script>
-    const PAL_FACTORS = {
-      sleep: 0.95,
-      sitting: 1.5,
-      walking: 1.9,
-      sport: 2.4,
-      rest: 1.5
-    };
-
-    function getNumber(id) {
+    function numberValue(id) {
       return Number(document.getElementById(id).value);
     }
 
-    function getPalData() {
-      const sleep = getNumber("sleepHours") || 0;
-      const sitting = getNumber("sittingHours") || 0;
-      const walking = getNumber("walkingHours") || 0;
-      const sport = getNumber("sportHours") || 0;
-      const enteredHours = sleep + sitting + walking + sport;
-      const rest = Math.max(0, 24 - enteredHours);
+    function updatePAL() {
+      const sleep = numberValue("sleepHours") || 0;
+      const sitting = numberValue("sittingHours") || 0;
+      const standing = numberValue("standingHours") || 0;
+      const sport = numberValue("sportHours") || 0;
 
-      const pal = (
-        sleep * PAL_FACTORS.sleep +
-        sitting * PAL_FACTORS.sitting +
-        walking * PAL_FACTORS.walking +
-        sport * PAL_FACTORS.sport +
-        rest * PAL_FACTORS.rest
-      ) / 24;
+      const usedHours = sleep + sitting + standing + sport;
+      const rest = Math.max(0, 24 - usedHours);
 
-      return { sleep, sitting, walking, sport, enteredHours, rest, pal };
+      const pal =
+        ((sleep * 0.95) +
+        (sitting * 1.5) +
+        (standing * 1.9) +
+        (sport * 2.4) +
+        (rest * 1.4)) / 24;
+
+      document.getElementById("restHours").innerText = rest.toFixed(1).replace(".0", "") + " h";
+      document.getElementById("palValue").innerText = pal.toFixed(2).replace(".", ",");
+
+      return {
+        pal,
+        usedHours
+      };
     }
 
-    function updatePalPreview() {
-      const data = getPalData();
-      document.getElementById("restHours").innerText = data.rest.toFixed(1).replace(".0", "") + " h";
-      document.getElementById("palValue").innerText = data.enteredHours > 24 ? "zu hoch" : data.pal.toFixed(2).replace(".", ",");
+    function toggleGoalWeight() {
+      const goal = document.getElementById("goal").value;
+      const wrap = document.getElementById("goalWeightWrap");
+
+      if (goal === "maintain") {
+        wrap.style.display = "none";
+      } else {
+        wrap.style.display = "block";
+      }
     }
 
     function calculate() {
       const gender = document.getElementById("gender").value;
-      const age = getNumber("age");
-      const height = getNumber("height");
-      const weight = getNumber("weight");
+      const age = numberValue("age");
+      const height = numberValue("height");
+      const weight = numberValue("weight");
       const goal = document.getElementById("goal").value;
-      const proteinMultiplierInput = getNumber("proteinMultiplier");
-      const fatMultiplier = getNumber("fatMultiplier");
-      const palData = getPalData();
+      const goalWeight = numberValue("goalWeight");
 
+      const proteinMultiplier = 1.8;
+      const fatMultiplier = 0.8;
+
+      const palData = updatePAL();
       const error = document.getElementById("error");
       const result = document.getElementById("result");
 
-      if (!age || !height || !weight || age <= 0 || height <= 0 || weight <= 0 || palData.enteredHours > 24) {
+      if (!age || !height || !weight || age <= 0 || height <= 0 || weight <= 0 || palData.usedHours > 24) {
         error.style.display = "block";
         result.style.display = "none";
         return;
@@ -509,6 +682,7 @@
       error.style.display = "none";
 
       let bmr;
+
       if (gender === "male") {
         bmr = 10 * weight + 6.25 * height - 5 * age + 5;
       } else {
@@ -516,31 +690,35 @@
       }
 
       const maintenance = bmr * palData.pal;
+
       let targetCalories;
-      let goalText;
+      let adjustment;
       let adjustmentText;
-      let weeklyChange;
-      let proteinMultiplier = proteinMultiplierInput;
+      let goalText;
+      let weeklyChangeKg = 0;
 
       if (goal === "lose") {
-        const tenPercent = maintenance * 0.10;
-        const deficit = Math.round(Math.min(400, Math.max(200, tenPercent)) / 10) * 10;
-        targetCalories = maintenance - deficit;
-        adjustmentText = "-" + deficit + " kcal";
-        weeklyChange = "ca. 0,2–0,4 kg pro Woche weniger";
-        proteinMultiplier = Math.max(proteinMultiplier, 1.8);
-        goalText = "Für Fettverlust wurde zuerst dein geschätzter Erhaltungsbedarf berechnet. Davon wurde ein moderates Defizit abgezogen. Das Ziel ist kein Crash-Diät-Wert, sondern ein realistischer Startpunkt. Nach 2–3 Wochen solltest du prüfen, ob sich Gewicht, Hunger, Energie und Training sinnvoll entwickeln.";
+        adjustment = Math.min(400, Math.max(200, Math.round(maintenance * 0.12)));
+        targetCalories = maintenance - adjustment;
+        adjustmentText = "-" + adjustment + " kcal";
+        weeklyChangeKg = (adjustment * 7) / 7700;
+
+        goalText =
+          "Für Fettverlust wurde ein moderates Defizit berechnet. Das ist bewusst keine Crash-Diät, sondern ein realistischer Startwert.";
       } else if (goal === "gain") {
-        const surplus = 250;
-        targetCalories = maintenance + surplus;
-        adjustmentText = "+" + surplus + " kcal";
-        weeklyChange = "ca. 0,1–0,3 kg pro Woche mehr";
-        goalText = "Für Muskelaufbau wurde ein leichter Kalorienüberschuss eingerechnet. Ziel ist nicht möglichst schnell zuzunehmen, sondern Training, Regeneration und Gewicht langsam nach oben zu bringen.";
+        adjustment = 250;
+        targetCalories = maintenance + adjustment;
+        adjustmentText = "+" + adjustment + " kcal";
+        weeklyChangeKg = (adjustment * 7) / 7700;
+
+        goalText =
+          "Für Muskelaufbau wurde ein leichter Überschuss eingerechnet. Ziel ist, Training und Gewicht langsam nach oben zu entwickeln.";
       } else {
+        adjustment = 0;
         targetCalories = maintenance;
         adjustmentText = "0 kcal";
-        weeklyChange = "Gewicht sollte grob stabil bleiben";
-        goalText = "Für Gewicht halten wurde dein ungefährer Erhaltungsbedarf berechnet. Nutze diesen Wert als Startpunkt und prüfe nach 2–3 Wochen, ob dein Gewicht ungefähr stabil bleibt.";
+        goalText =
+          "Für Gewicht halten entspricht dein Ziel ungefähr deinen geschätzten Erhaltungskalorien.";
       }
 
       const protein = weight * proteinMultiplier;
@@ -548,28 +726,66 @@
       const proteinCalories = protein * 4;
       const fatCalories = fat * 9;
       const carbCalories = targetCalories - proteinCalories - fatCalories;
-      const carbs = carbCalories / 4;
+      const carbs = Math.max(0, carbCalories / 4);
+      const waterLiters = Math.max(2, weight * 0.035);
 
-      document.getElementById("bmr").innerText = Math.round(bmr) + " kcal";
-      document.getElementById("palResult").innerText = palData.pal.toFixed(2).replace(".", ",");
-      document.getElementById("maintenance").innerText = Math.round(maintenance) + " kcal";
+      let timelineText = "";
+
+      if (goal === "lose") {
+        timelineText =
+          "Grobe Schätzung: Mit diesem Defizit könntest du ungefähr " +
+          weeklyChangeKg.toFixed(2).replace(".", ",") +
+          " kg pro Woche verlieren. Das ist nur ein Näherungswert.";
+
+        if (goalWeight && goalWeight < weight) {
+          const kgToLose = weight - goalWeight;
+          const weeks = kgToLose / weeklyChangeKg;
+          timelineText +=
+            " Bis zu deinem Zielgewicht wären das ungefähr " +
+            Math.round(weeks) +
+            " Wochen.";
+        }
+      } else if (goal === "gain") {
+        timelineText =
+          "Grobe Schätzung: Mit diesem Überschuss könntest du ungefähr " +
+          weeklyChangeKg.toFixed(2).replace(".", ",") +
+          " kg pro Woche zunehmen. Ein Teil davon kann Muskelmasse sein, ein Teil aber auch Fett.";
+
+        if (goalWeight && goalWeight > weight) {
+          const kgToGain = goalWeight - weight;
+          const weeks = kgToGain / weeklyChangeKg;
+          timelineText +=
+            " Bis zu deinem Zielgewicht wären das ungefähr " +
+            Math.round(weeks) +
+            " Wochen.";
+        }
+      } else {
+        timelineText =
+          "Beobachte dein Gewicht 2–3 Wochen. Bleibt es ungefähr stabil, passt der Wert wahrscheinlich gut.";
+      }
+
+      const stepsText =
+        "Als einfache Orientierung: Für viele Menschen sind 8.000–10.000 Schritte pro Tag ein guter Alltagsanker. Wenn du aktuell deutlich darunter bist, steigere langsam.";
+
       document.getElementById("calories").innerText = Math.round(targetCalories) + " kcal";
+      document.getElementById("maintenance").innerText = Math.round(maintenance) + " kcal";
+      document.getElementById("bmrResult").innerText = Math.round(bmr) + " kcal";
+      document.getElementById("palResult").innerText = palData.pal.toFixed(2).replace(".", ",");
+      document.getElementById("adjustment").innerText = adjustmentText;
       document.getElementById("protein").innerText = Math.round(protein) + " g";
       document.getElementById("fat").innerText = Math.round(fat) + " g";
-      document.getElementById("carbs").innerText = Math.max(0, Math.round(carbs)) + " g";
-      document.getElementById("adjustment").innerText = adjustmentText;
-      document.getElementById("weeklyChange").innerText = weeklyChange;
+      document.getElementById("carbs").innerText = Math.round(carbs) + " g";
+      document.getElementById("water").innerText = waterLiters.toFixed(1).replace(".", ",") + " l";
       document.getElementById("goalText").innerText = goalText;
+      document.getElementById("timelineText").innerText = timelineText;
+      document.getElementById("stepsText").innerText = stepsText;
 
       result.style.display = "block";
       result.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    document.querySelectorAll(".pal-field").forEach(function(input) {
-      input.addEventListener("input", updatePalPreview);
-    });
-
-    updatePalPreview();
+    updatePAL();
+    toggleGoalWeight();
   </script>
 </body>
 </html>
