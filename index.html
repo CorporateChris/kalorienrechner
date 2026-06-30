@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
@@ -7,40 +6,65 @@
   <title>Kostenloser Kalorien- & Protein-Rechner</title>
 
   <style>
+    :root {
+      --bg: #f4f4f5;
+      --card: #ffffff;
+      --text: #111111;
+      --muted: #5f6368;
+      --border: #dedede;
+      --dark: #111111;
+      --green: #16c60c;
+      --green-soft: #eef9ee;
+      --purple: #7c4dff;
+      --purple-soft: #f2edff;
+      --warning: #fff7e6;
+      --warning-border: #f0d99b;
+      --danger: #b00020;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background: #f5f5f5;
+      background: var(--bg);
       margin: 0;
       padding: 20px;
-      color: #111;
+      color: var(--text);
     }
 
     .container {
-      max-width: 540px;
+      max-width: 720px;
       margin: 0 auto;
-      background: #ffffff;
+      background: var(--card);
       padding: 24px;
-      border-radius: 18px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
 
     h1 {
-      font-size: 28px;
-      margin-bottom: 10px;
+      font-size: 30px;
+      margin: 0 0 10px;
       line-height: 1.15;
+    }
+
+    h2 {
+      font-size: 21px;
+      margin: 0 0 14px;
     }
 
     .subtitle {
       font-size: 15px;
-      color: #555;
+      color: var(--muted);
       margin-bottom: 20px;
       line-height: 1.45;
     }
 
     .disclaimer-top {
-      background: #fff7e6;
-      border: 1px solid #f0d99b;
-      border-radius: 12px;
+      background: var(--warning);
+      border: 1px solid var(--warning-border);
+      border-radius: 14px;
       padding: 14px;
       font-size: 13px;
       line-height: 1.45;
@@ -48,31 +72,91 @@
       margin-bottom: 22px;
     }
 
+    .section {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      margin-top: 18px;
+      background: #fff;
+    }
+
+    .section.purple {
+      border-color: #d8cbff;
+      background: var(--purple-soft);
+    }
+
+    .section.green {
+      border-color: #cdeccd;
+      background: var(--green-soft);
+    }
+
     label {
       display: block;
-      margin-top: 16px;
+      margin-top: 14px;
       margin-bottom: 6px;
       font-weight: bold;
+      font-size: 14px;
     }
 
     input, select {
       width: 100%;
       padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
+      border: 1px solid #cfcfcf;
+      border-radius: 11px;
       font-size: 16px;
-      box-sizing: border-box;
       background: #fff;
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .green-input {
+      border: 2px solid var(--green);
+      background: #f7fff7;
+      font-weight: bold;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.35;
+      margin-top: 6px;
+    }
+
+    .pal-live {
+      margin-top: 16px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid #d7c9ff;
+      border-radius: 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .pal-live div {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .pal-live strong {
+      display: block;
+      margin-top: 3px;
+      font-size: 20px;
+      color: var(--text);
     }
 
     button {
       width: 100%;
       margin-top: 24px;
-      padding: 14px;
-      background: #111;
+      padding: 15px;
+      background: var(--dark);
       color: #fff;
       border: none;
-      border-radius: 12px;
+      border-radius: 14px;
       font-size: 17px;
       font-weight: bold;
       cursor: pointer;
@@ -86,14 +170,9 @@
       display: none;
       margin-top: 26px;
       padding: 20px;
-      background: #f0f7f0;
-      border-radius: 14px;
+      background: var(--green-soft);
+      border-radius: 16px;
       border: 1px solid #cde5cd;
-    }
-
-    .result h2 {
-      margin-top: 0;
-      font-size: 22px;
     }
 
     .result-grid {
@@ -106,44 +185,48 @@
     .box {
       background: #fff;
       padding: 14px;
-      border-radius: 12px;
-      border: 1px solid #ddd;
+      border-radius: 13px;
+      border: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+      min-height: 76px;
     }
 
     .box strong {
       display: block;
-      font-size: 20px;
-      margin-top: 4px;
+      font-size: 21px;
+      margin-top: 5px;
+      color: var(--text);
     }
 
     .box.full {
       grid-column: 1 / -1;
     }
 
-    .note {
+    .note, .important-note {
       font-size: 13px;
-      color: #555;
       line-height: 1.45;
       margin-top: 18px;
     }
 
+    .note {
+      color: var(--muted);
+    }
+
     .important-note {
-      font-size: 13px;
       color: #333;
       background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 12px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
       padding: 14px;
-      line-height: 1.45;
-      margin-top: 18px;
     }
 
     .ad {
       margin-top: 22px;
       padding: 16px;
-      background: #111;
+      background: var(--dark);
       color: #fff;
-      border-radius: 14px;
+      border-radius: 15px;
       line-height: 1.45;
       font-size: 14px;
     }
@@ -165,7 +248,7 @@
       color: #111;
       text-decoration: none;
       padding: 12px;
-      border-radius: 10px;
+      border-radius: 11px;
       font-weight: bold;
     }
 
@@ -177,9 +260,10 @@
 
     .error {
       display: none;
-      color: #b00020;
+      color: var(--danger);
       margin-top: 14px;
       font-size: 14px;
+      font-weight: bold;
     }
 
     footer {
@@ -188,223 +272,411 @@
       color: #777;
       margin-top: 18px;
     }
-  </style>
 
+    @media (max-width: 640px) {
+      body {
+        padding: 12px;
+      }
+
+      .container {
+        padding: 18px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+
+      .input-grid, .result-grid, .pal-live {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
-<body>
+  <body>
 
-  <div class="container">
-    <h1>Kostenloser Kalorien- & Protein-Rechner</h1>
+<div class="container">
 
-```
+<h1>Kostenloser Kalorien- & Protein-Rechner</h1>
+
 <p class="subtitle">
-  Gib kurz deine Daten ein und erhalte eine grobe Orientierung für deine Erhaltungskalorien, dein Kalorienziel, Protein, Fett und Kohlenhydrate.
+Berechne kostenlos deinen Kalorienbedarf, Proteinbedarf und deine Makronährstoffe.
 </p>
 
 <div class="disclaimer-top">
-  Hinweis: Ich bin kein Ernährungsberater, Arzt oder Sportexperte. Dieser Rechner liefert nur grobe Richtwerte zur Orientierung. Wenn du gesundheitliche Themen hast, stark über- oder untergewichtig bist oder auf Nummer sicher gehen willst, sprich bitte mit einem Arzt, Ernährungsberater oder qualifizierten Experten.
+<b>Hinweis:</b><br>
+Ich bin kein Arzt, Ernährungsberater oder Sportwissenschaftler.
+Dieser Rechner liefert lediglich grobe Richtwerte und ersetzt keine individuelle Beratung.
 </div>
 
-<label for="gender">Geschlecht</label>
+<div class="section purple">
+
+<h2>Persönliche Daten</h2>
+
+<div class="input-grid">
+
+<div>
+<label>Geschlecht</label>
+
 <select id="gender">
-  <option value="male">Männlich</option>
-  <option value="female">Weiblich</option>
+<option value="male">Männlich</option>
+<option value="female">Weiblich</option>
+</select>
+</div>
+
+<div>
+<label>Alter</label>
+
+<input
+type="number"
+id="age"
+class="green-input"
+placeholder="30">
+</div>
+
+<div>
+<label>Größe (cm)</label>
+
+<input
+type="number"
+id="height"
+class="green-input"
+placeholder="177">
+</div>
+
+<div>
+<label>Gewicht (kg)</label>
+
+<input
+type="number"
+id="weight"
+class="green-input"
+placeholder="80">
+</div>
+
+</div>
+
+</div>
+
+<div class="section green">
+
+<h2>Makros</h2>
+
+<div class="input-grid">
+
+<div>
+
+<label>Protein (g/kg)</label>
+
+<select id="proteinFactor">
+
+<option value="1.6">1,6</option>
+<option value="1.8">1,8</option>
+<option value="2" selected>2,0</option>
+<option value="2.2">2,2</option>
+
 </select>
 
-<label for="age">Alter</label>
-<input type="number" id="age" placeholder="z. B. 30" />
+</div>
 
-<label for="height">Körpergröße in cm</label>
-<input type="number" id="height" placeholder="z. B. 177" />
+<div>
 
-<label for="weight">Gewicht in kg</label>
-<input type="number" id="weight" placeholder="z. B. 80" />
+<label>Fett (g/kg)</label>
 
-<label for="activity">Aktivitätslevel</label>
-<select id="activity">
-  <option value="1.35">Wenig aktiv - Bürojob, wenig Bewegung</option>
-  <option value="1.5">Leicht aktiv - Alltag mit Bewegung / Schritte</option>
-  <option value="1.65">Moderat aktiv - Training 2-4x pro Woche</option>
-  <option value="1.8">Sehr aktiv - Training 5x+ pro Woche</option>
+<select id="fatFactor">
+
+<option value="0.7">0,7</option>
+<option value="0.8" selected>0,8</option>
+<option value="0.9">0,9</option>
+<option value="1">1,0</option>
+
 </select>
 
-<label for="goal">Ziel</label>
+</div>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>PAL-Berechnung</h2>
+
+<div class="input-grid">
+
+<div>
+
+<label>Schlaf (Stunden)</label>
+
+<input
+id="sleep"
+class="green-input"
+type="number"
+value="8"
+oninput="updatePAL()">
+
+</div>
+
+<div>
+
+<label>Sitzende Tätigkeit</label>
+
+<input
+id="sit"
+class="green-input"
+type="number"
+value="8"
+oninput="updatePAL()">
+
+</div>
+
+<div>
+
+<label>Stehend / Gehend</label>
+
+<input
+id="stand"
+class="green-input"
+type="number"
+value="6"
+oninput="updatePAL()">
+
+</div>
+
+<div>
+
+<label>Sport / harte Arbeit</label>
+
+<input
+id="sport"
+class="green-input"
+type="number"
+value="2"
+oninput="updatePAL()">
+
+</div>
+
+</div>
+
+<div class="pal-live">
+
+<div>
+
+Reststunden
+
+<strong id="restHours">
+0
+</strong>
+
+</div>
+
+<div>
+
+PAL-Wert
+
+<strong id="palValue">
+1.55
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>Ziel</h2>
+
 <select id="goal">
-  <option value="lose">Abnehmen</option>
-  <option value="maintain">Gewicht halten</option>
-  <option value="gain">Muskelaufbau</option>
+
+<option value="lose">Fett verlieren</option>
+
+<option value="maintain">
+Gewicht halten
+</option>
+
+<option value="gain">
+Muskelaufbau
+</option>
+
 </select>
 
-<button onclick="calculate()">Berechnen</button>
+</div>
 
-<p class="error" id="error">
-  Bitte fülle alle Felder korrekt aus.
+<button onclick="calculate()">
+
+Kalorien berechnen
+
+</button>
+
+<p
+class="error"
+id="error">
+
+Bitte alle Felder korrekt ausfüllen.
+
 </p>
 
-<div class="result" id="result">
-  <h2>Deine grobe Orientierung</h2>
+<div
+class="result"
+id="result">
 
-  <div class="result-grid">
-    <div class="box full">
-      Geschätzte Erhaltungskalorien
-      <strong id="maintenance">-</strong>
-    </div>
+<h2>
 
-    <div class="box full">
-      Empfohlener Startwert
-      <strong id="calories">-</strong>
-    </div>
+Dein Ergebnis
 
-    <div class="box">
-      Protein
-      <strong id="protein">-</strong>
-    </div>
+</h2>
 
-    <div class="box">
-      Fett
-      <strong id="fat">-</strong>
-    </div>
+<div class="result-grid">
 
-    <div class="box">
-      Kohlenhydrate
-      <strong id="carbs">-</strong>
-    </div>
+<div class="box">
 
-    <div class="box">
-      Defizit / Überschuss
-      <strong id="adjustment">-</strong>
-    </div>
-  </div>
+Grundumsatz
+
+<strong id="bmrResult">
+
+-
+
+</strong>
+
+</div>
+
+<div class="box">
+
+PAL
+
+<strong id="palResult">
+
+-
+
+</strong>
+
+</div>
+
+<div class="box full">
+
+Erhaltungskalorien
+
+<strong id="maintenance">
+
+-
+
+</strong>
+
+</div>
+
+<div class="box full">
+
+Kalorienziel
+
+<strong id="calories">
+
+-
+
+</strong>
+
+</div>
+
+<div class="box">
+
+Protein
+
+<strong id="protein">
+
+-
+
+</strong>
+
+</div>
+
+<div class="box">
+
+Fett
+
+<strong id="fat">
+
+-
+
+</strong>
+
+</div>
+
+<div class="box">
+
+Kohlenhydrate
+
+<strong id="carbs">
+
+-
+
+</strong>
+
+</div>
+
+<div class="box">
+
+Defizit / Überschuss
+
+<strong id="adjustment">
+
+-
+
+</strong>
+
+</div>
+
+</div>
 
   <p class="note" id="goalText"></p>
 
-  <div class="important-note">
-    Wichtig: Das ist kein perfekter Wert, sondern ein Startpunkt. Beobachte dein Gewicht und dein Wohlbefinden für 2–3 Wochen. Wenn du abnimmst und sich dein Gewicht verändert hat, nutze den Rechner erneut mit deinem neuen Gewicht. Wenn sich gar nichts bewegt, kannst du danach langsam nachjustieren.
+<div class="important-note">
+  Wichtig: Das ist kein perfekter Wert, sondern ein Startpunkt.
+  Beobachte dein Gewicht, dein Training und dein Wohlbefinden für 2–3 Wochen.
+  Wenn sich dein Gewicht verändert hat, nutze den Rechner erneut mit deinem neuen Gewicht.
+</div>
+
+<p class="note">
+  Dieser Rechner ersetzt keine medizinische, sportwissenschaftliche oder ernährungswissenschaftliche Beratung.
+  Bei gesundheitlichen Problemen, Medikamenten, Essstörungen, Schwangerschaft oder Unsicherheit bitte vorher mit medizinischem Fachpersonal oder einem qualifizierten Experten sprechen.
+</p>
+
+<div class="ad">
+  <strong>Protein einfacher erreichen?</strong><br>
+  Wenn du Schwierigkeiten hast, auf dein Protein zu kommen, können Produkte wie IsoClear, Kreatin oder andere High-Protein-Produkte helfen.
+  Wenn du ESN-Produkte bestellen willst, kannst du gerne meinen Code <strong>CC</strong> nutzen.
+
+  <div class="product-buttons">
+
+    <a href="https://www.esn.com/discount/CC?redirect=/products/isoclear-protein-clear-drink&utm_source=instagram&utm_medium=influencer&utm_campaign=CC" target="_blank" class="esn-button">
+      IsoClear Protein ansehen
+    </a>
+
+    <a href="https://www.esn.com/discount/CC?redirect=/products/esn-crank&utm_source=instagram&utm_medium=influencer&utm_campaign=CC" target="_blank" class="esn-button">
+      ESN Crank / Booster ansehen
+    </a>
+
+    <a href="https://www.esn.com/discount/CC?redirect=/products/esn-ultrapure-creatine-monohydrate&utm_source=instagram&utm_medium=influencer&utm_campaign=CC" target="_blank" class="esn-button">
+      ESN Kreatin ansehen
+    </a>
+
+    <a href="https://esn.com/instagram/CC" target="_blank" class="esn-button">
+      Alle ESN-Angebote mit Code CC
+    </a>
+
   </div>
 
-  <p class="note">
-    Dieser Rechner ersetzt keine medizinische, sportwissenschaftliche oder ernährungswissenschaftliche Beratung. Bei gesundheitlichen Problemen, Medikamenten, Essstörungen, Schwangerschaft oder Unsicherheit bitte vorher mit medizinischem Fachpersonal oder einem qualifizierten Experten sprechen.
-  </p>
-
-  <div class="ad">
-    <strong>Protein einfacher erreichen?</strong><br>
-    Wenn du Schwierigkeiten hast, auf dein Protein zu kommen, können Produkte wie IsoClear oder andere High-Protein-Produkte helfen.
-    Wenn du ESN-Produkte bestellen willst, kannst du gerne meinen Code <strong>CC</strong> nutzen.
-
-    <div class="product-buttons">
-      <a href="https://www.esn.com/discount/CC?redirect=/products/isoclear-protein-clear-drink&utm_source=instagram&utm_medium=influencer&utm_campaign=CC" target="_blank" class="esn-button">
-        IsoClear Protein ansehen
-      </a>
-
-      <a href="https://www.esn.com/discount/CC?redirect=/products/esn-crank&utm_source=instagram&utm_medium=influencer&utm_campaign=CC" target="_blank" class="esn-button">
-        ESN Crank / Booster ansehen
-      </a>
-
-      <a href="https://esn.com/instagram/CC" target="_blank" class="esn-button">
-        Alle ESN-Angebote mit Code CC
-      </a>
-    </div>
-
-    <div class="small-text">
-      Werbung / Affiliate-Code. Der Code CC unterstützt mich und mein Projekt.
-    </div>
+  <div class="small-text">
+    Werbung / Affiliate-Code. Der Code CC unterstützt mich und mein Projekt.
   </div>
+</div>
+
 </div>
 
 <footer>
   Kostenloser Rechner von Corporate Chris
 </footer>
-```
 
-  </div>
+</div>
 
-  <script>
-    function calculate() {
-      const gender = document.getElementById("gender").value;
-      const age = Number(document.getElementById("age").value);
-      const height = Number(document.getElementById("height").value);
-      const weight = Number(document.getElementById("weight").value);
-      const activity = Number(document.getElementById("activity").value);
-      const goal = document.getElementById("goal").value;
-
-      const error = document.getElementById("error");
-      const result = document.getElementById("result");
-
-      if (!age || !height || !weight || age <= 0 || height <= 0 || weight <= 0) {
-        error.style.display = "block";
-        result.style.display = "none";
-        return;
-      }
-
-      error.style.display = "none";
-
-      let bmr;
-
-      if (gender === "male") {
-        bmr = 10 * weight + 6.25 * height - 5 * age + 5;
-      } else {
-        bmr = 10 * weight + 6.25 * height - 5 * age - 161;
-      }
-
-      const maintenance = bmr * activity;
-
-      let targetCalories;
-      let proteinMultiplier;
-      let goalText;
-      let adjustmentText;
-
-      if (goal === "lose") {
-        let deficit;
-
-        if (weight < 80) {
-          deficit = 200;
-        } else if (weight <= 100) {
-          deficit = 300;
-        } else {
-          deficit = 400;
-        }
-
-        targetCalories = maintenance - deficit;
-        proteinMultiplier = 2.0;
-        adjustmentText = "-" + deficit + " kcal";
-
-        goalText = "Fürs Abnehmen wurde zuerst dein geschätzter Erhaltungsbedarf berechnet. Davon wurde ein moderates Defizit abgezogen. Das Ziel ist kein Crash-Diät-Wert, sondern ein Startpunkt. Nach 2–3 Wochen solltest du prüfen, ob sich dein Gewicht verändert und den Rechner bei verändertem Gewicht erneut nutzen.";
-      } else if (goal === "gain") {
-        const surplus = 250;
-
-        targetCalories = maintenance + surplus;
-        proteinMultiplier = 1.8;
-        adjustmentText = "+" + surplus + " kcal";
-
-        goalText = "Für Muskelaufbau wurde ein leichter Kalorienüberschuss eingerechnet. Auch hier gilt: Starte mit diesem Wert, beobachte Gewicht, Training und Wohlbefinden und passe nach 2–3 Wochen langsam an.";
-      } else {
-        targetCalories = maintenance;
-        proteinMultiplier = 1.8;
-        adjustmentText = "0 kcal";
-
-        goalText = "Für Gewicht halten wurde dein ungefährer Erhaltungsbedarf berechnet. Nutze diesen Wert als Startpunkt und prüfe nach 2–3 Wochen, ob dein Gewicht ungefähr stabil bleibt.";
-      }
-
-      const protein = weight * proteinMultiplier;
-      const fat = weight * 0.8;
-
-      const proteinCalories = protein * 4;
-      const fatCalories = fat * 9;
-      const carbCalories = targetCalories - proteinCalories - fatCalories;
-      const carbs = carbCalories / 4;
-
-      document.getElementById("maintenance").innerText = Math.round(maintenance) + " kcal";
-      document.getElementById("calories").innerText = Math.round(targetCalories) + " kcal";
-      document.getElementById("protein").innerText = Math.round(protein) + " g";
-      document.getElementById("fat").innerText = Math.round(fat) + " g";
-      document.getElementById("carbs").innerText = Math.max(0, Math.round(carbs)) + " g";
-      document.getElementById("adjustment").innerText = adjustmentText;
-      document.getElementById("goalText").innerText = goalText;
-
-      result.style.display = "block";
-    }
-  </script>
-
-</body>
-</html>
+<script>
