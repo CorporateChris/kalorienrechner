@@ -570,6 +570,17 @@
       <div class="insight" id="goalText"></div>
       <div class="insight" id="timelineText"></div>
       <div class="insight" id="stepsText"></div>
+
+      <div style="margin-top:18px;background:#ffffff;border-radius:18px;padding:18px;color:#111;">
+      <h3>🎯 Passende Produktempfehlungen (optional)</h3>
+      <p id="recommendationText">Basierend auf deinem Ziel könnten diese Produkte sinnvoll sein.</p>
+      <div class="product-buttons">
+      <a id="product1" href="#" class="esn-button" target="_blank">Produkt 1</a>
+      <a id="product2" href="#" class="esn-button" target="_blank">Produkt 2</a>
+      <a href="https://esn.com/instagram/CC" class="esn-button full" target="_blank">🎁 Alle ESN-Angebote mit Code CC</a>
+      </div>
+      <div class="small-text" style="color:#555;">Werbung / Affiliate-Link. Code CC unterstützt mein Projekt.</div>
+      </div>
     </div>
 
     <div class="important-note">
@@ -666,7 +677,7 @@
       const goal = document.getElementById("goal").value;
       const goalWeight = numberValue("goalWeight");
 
-      const proteinMultiplier = 1.8;
+      const proteinMultiplier = 2.0;
       const fatMultiplier = 0.8;
 
       const palData = updatePAL();
@@ -779,6 +790,9 @@
       document.getElementById("goalText").innerText = goalText;
       document.getElementById("timelineText").innerText = timelineText;
       document.getElementById("stepsText").innerText = stepsText;
+const p1=document.getElementById("product1"),p2=document.getElementById("product2"),rec=document.getElementById("recommendationText");
+if(goal==="lose"){rec.innerText="Für Fettverlust können Protein und Kreatin praktische Ergänzungen sein.";p1.innerText="🧃 IsoClear ansehen";p1.href="https://www.esn.com/discount/CC?redirect=/products/isoclear-protein-clear-drink&utm_source=instagram&utm_medium=influencer&utm_campaign=CC";p2.innerText="💪 Kreatin ansehen";p2.href="https://www.esn.com/discount/CC?redirect=/products/esn-ultrapure-creatine-monohydrate&utm_source=instagram&utm_medium=influencer&utm_campaign=CC";}
+else{rec.innerText="Für dein Ziel können Protein und Kreatin sinnvolle Ergänzungen sein.";p1.innerText="🥤 Designer Whey ansehen";p1.href="https://www.esn.com/discount/CC?redirect=/products/designer-whey-protein&utm_source=instagram&utm_medium=influencer&utm_campaign=CC";p2.innerText="💪 Kreatin ansehen";p2.href="https://www.esn.com/discount/CC?redirect=/products/esn-ultrapure-creatine-monohydrate&utm_source=instagram&utm_medium=influencer&utm_campaign=CC";}
 
       result.style.display = "block";
       result.scrollIntoView({ behavior: "smooth", block: "start" });
